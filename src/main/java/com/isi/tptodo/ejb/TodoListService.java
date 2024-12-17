@@ -13,10 +13,14 @@ public class TodoListService {
     EntityManager em = managerFactory.createEntityManager();
     EntityTransaction transaction = em.getTransaction();
 
-    public List<Todolist> getTodoListsByUser(User user) {
-        return em.createQuery("SELECT t FROM Todolist t WHERE t.user = :user", Todolist.class)
-                .setParameter("user", user)
-                .getResultList();
+    public List getTodoListsByUser(int iduser) {
+        transaction.begin();
+        String sql= "SELECT * from todolist where user_id = " + iduser+";";
+        List todoLists = em.createNativeQuery(sql, Todolist.class).getResultList();
+        return todoLists;
+        //        return em.createQuery("SELECT t FROM Todolist t WHERE t.userByUserId = :user", Todolist.class)
+//                .setParameter("user", user)
+//                .getResultList();
     }
 
     public void createTodoList(User user, String title) {

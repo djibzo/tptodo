@@ -1,4 +1,4 @@
-package com.isi.tptodo;
+package com.isi.tptodo.servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,10 +8,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "test",urlPatterns = "/")
-public class TestServlet extends HttpServlet {
+@WebServlet(name = "logout", value = "/logout")
+public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("login.jsp");
+        req.getSession().invalidate();
+        resp.sendRedirect("login.jsp");
     }
 }

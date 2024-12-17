@@ -18,6 +18,21 @@ public class UserService {
                 .findFirst()
                 .orElse(null);
     }
+    public User authenticate(String username, String password) {
+        try {
+            // Requête pour trouver l'utilisateur avec le nom d'utilisateur et le mot de passe
+            TypedQuery<User> query = em.createQuery(
+                    "SELECT u FROM User u WHERE u.username = :username AND u.password = :password",
+                    User.class
+            );
+            query.setParameter("username", username);
+            query.setParameter("password", password);
+
+            return query.getSingleResult(); // Retourne l'utilisateur si trouvé
+        } catch (Exception e) {
+            return null; // Aucun utilisateur trouvé ou erreur
+        }
+    }
 
     public void registerUser(String username, String password) {
         transaction.begin();

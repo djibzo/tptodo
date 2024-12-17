@@ -29,6 +29,9 @@
                         <i class="bi bi-send-fill"></i> Envoyer
                     </button>
                 </form>
+                <div style="color: red;">
+                    <%= request.getAttribute("errorMessage") != null ? request.getAttribute("errorMessage") : "" %>
+                </div>
 
                 <!-- Lien vers la connexion -->
                 <div class="text-center mt-3">

@@ -22,7 +22,6 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("POST OK");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         userService.registerUser(username, password);
