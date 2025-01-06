@@ -18,9 +18,6 @@ public class TodoListService {
         String sql= "SELECT * from todolist where user_id = " + iduser+";";
         List todoLists = em.createNativeQuery(sql, Todolist.class).getResultList();
         return todoLists;
-        //        return em.createQuery("SELECT t FROM Todolist t WHERE t.userByUserId = :user", Todolist.class)
-//                .setParameter("user", user)
-//                .getResultList();
     }
 
     public void createTodoList(User user, String title) {

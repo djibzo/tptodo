@@ -35,7 +35,7 @@
 
                 <!-- Lien vers la connexion -->
                 <div class="text-center mt-3">
-                    <a href="login" class="text-secondary text-decoration-none">Déjà inscrit ? Se connecter</a>
+                    <a href="inscription" class="text-secondary text-decoration-none">Pas de compte ? S'inscrire'</a>
                 </div>
             </div>
         </div>

@@ -22,6 +22,7 @@
                             <input type="text" id="title" name="title" class="form-control" placeholder="Entrez le titre" required>
                         </div>
                         <button type="submit" class="btn btn-success w-100">Creer</button>
+                        <a href="home" type="submit" class="btn btn-info w-100 mt-2">Retour</a>
                     </form>
                 </div>
             </div>

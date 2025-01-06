@@ -14,10 +14,13 @@ public class TaskService {
     EntityManager em = managerFactory.createEntityManager();
     EntityTransaction transaction = em.getTransaction();
 
-    public List<Task> getTasksByTodoList(Todolist todoList) {
-        return em.createQuery("SELECT t FROM Task t WHERE t.id = :todoList", Task.class)
-                .setParameter("todoList", todoList)
-                .getResultList();
+    public List<Task> getTasksByTodoList(int todoList) {
+//        return em.createQuery("SELECT t FROM Task t WHERE t.id = :todoList", Task.class)
+//                .setParameter("todoList", todoList)
+//                .getResultList();
+        String sql= "SELECT * from task where todo_list_id = " + todoList+";";
+        List tasks = em.createNativeQuery(sql, Task.class).getResultList();
+        return tasks;
     }
 
     public void addTask(Todolist todoList, String description) {
