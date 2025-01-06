@@ -1,5 +1,7 @@
+<%-- tasks.jsp --%>
+<%@ page import="com.isi.tptodo.entities.Task" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.Arrays" %>
+<%@ page import="com.isi.tptodo.ejb.TaskService" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,36 +24,26 @@
     </form>
 
     <h2>Tasks existantes :</h2>
-    <%-- Inclusion des tâches pour une TodoList --%>
     <%
         try {
             int todolistId = Integer.parseInt(request.getParameter("todolistId"));
-            com.isi.tptodo.ejb.TaskService taskService = new com.isi.tptodo.ejb.TaskService();
+            TaskService taskService = new TaskService();
 
-            // Récupération des tâches associées à la TodoList
-            List<com.isi.tptodo.entities.Task> taskList = taskService.getTasksByTodoList(todolistId);
+            // Récupérer les tâches associées à la Todolist
+            List<Task> taskList = taskService.getTasksByTodoList(todolistId);
 
             if (taskList != null && !taskList.isEmpty()) {
     %>
     <ul class="list-group">
-        <% for (com.isi.tptodo.entities.Task task : taskList) { %>
+        <% for (Task task : taskList) { %>
         <li class="list-group-item"><%= task.getDescription() %></li>
         <% } %>
     </ul>
-    <%
-    } else {
-    %>
+    <% } else { %>
     <p class="text-muted">Aucune tache trouvee pour cette liste.</p>
-    <%
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("<p>Erreur : l'ID de la TodoList est invalide.</p>");
-        } catch (Exception e) {
-            System.out.println("<p>Une erreur est survenue lors de la récupération des tâches.</p>");
-            System.out.println(e.getMessage());
-            System.out.println(Arrays.toString(e.getStackTrace()));
-        }
-    %>
+    <% } } catch (Exception e) { %>
+    <p>Erreur: <%= e.getMessage() %></p>
+    <% } %>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

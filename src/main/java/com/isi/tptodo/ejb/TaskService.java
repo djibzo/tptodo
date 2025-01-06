@@ -23,11 +23,11 @@ public class TaskService {
         return tasks;
     }
 
-    public void addTask(Todolist todoList, String description) {
+    public void addTask(Todolist todoList, String description, int completed ) {
         transaction.begin();
         Task task = new Task();
         task.setDescription(description);
-        task.setCompleted(0);
+        task.setCompleted(completed);
         task.setTodolistByTodoListId(todoList);
         em.persist(task);
         transaction.commit();
