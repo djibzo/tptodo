@@ -36,9 +36,27 @@
     %>
     <ul class="list-group">
         <% for (Task task : taskList) { %>
-        <li class="list-group-item"><%= task.getDescription() %></li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>
+                <%= task.getDescription() %>
+                <% if (task.getCompleted() == 1) { %>
+                    <span class="badge bg-success">Complete</span>
+                <% } else { %>
+                    <span class="badge bg-warning text-dark">Non completee</span>
+                <% } %>
+            </span>
+            <% if (task.getCompleted() == 0) { %>
+            <form action="task" method="POST" class="ms-3">
+                <input type="hidden" name="todolistId" value="<%= request.getParameter("todolistId") %>">
+                <input type="hidden" name="taskId" value="<%= task.getId() %>">
+                <input type="hidden" name="action" value="complete">
+                <button type="submit" class="btn btn-success btn-sm">Marquer comme terminee</button>
+            </form>
+            <% } %>
+        </li>
         <% } %>
     </ul>
+
     <% } else { %>
     <p class="text-muted">Aucune tache trouvee pour cette liste.</p>
     <% } } catch (Exception e) { %>

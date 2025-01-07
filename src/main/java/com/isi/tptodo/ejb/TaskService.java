@@ -33,11 +33,14 @@ public class TaskService {
         transaction.commit();
     }
 
-    public void markTaskAsCompleted(Long taskId) {
+    public void markTaskAsCompleted(int taskId) {
+        transaction.begin();
         Task task = em.find(Task.class, taskId);
         if (task != null) {
             task.setCompleted(1);
+            em.merge(task);
         }
+        transaction.commit();
     }
 }
 

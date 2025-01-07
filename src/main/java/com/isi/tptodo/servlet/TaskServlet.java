@@ -27,17 +27,28 @@ public class TaskServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String description = req.getParameter("description");
-        int todolistId = Integer.parseInt(req.getParameter("todolistId"));
+        String action = req.getParameter("action");
 
-        // Récupérer la Todolist à partir de l'ID
-        Todolist todolist = em.find(Todolist.class, todolistId);
-        if (todolist != null) {
-            taskService.addTask(todolist, description,0);
-            req.setAttribute("todolistId", todolistId);  // Passer l'ID de la Todolist
-            req.getRequestDispatcher("tasks.jsp").forward(req, resp); // Recharger la même page
+        if ("complete".equals(action)) {
+            // Action pour marquer une tâche comme terminée
+            int taskId = Integer.parseInt(req.getParameter("taskId"));
+            taskService.markTaskAsCompleted(taskId);
+            int todolistId = Integer.parseInt(req.getParameter("todolistId"));
+            req.setAttribute("todolistId", todolistId);
+            req.getRequestDispatcher("tasks.jsp").forward(req, resp);
         } else {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Todolist non trouvée");
+            // Action par défaut : Ajouter une tâche
+            String description = req.getParameter("description");
+            int todolistId = Integer.parseInt(req.getParameter("todolistId"));
+
+            Todolist todolist = em.find(Todolist.class, todolistId);
+            if (todolist != null) {
+                taskService.addTask(todolist, description, 0);
+                req.setAttribute("todolistId", todolistId);
+                req.getRequestDispatcher("tasks.jsp").forward(req, resp);
+            } else {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Todolist non trouvée");
+            }
         }
     }
 
